@@ -1,0 +1,1504 @@
+# Version 0.2
+
+# KNOWN ISSUES:
+  # - ## NAV mode doesn’t work until you toggle preset 1 on the mfd
+
+# - FIXES
+  # - 2/10/25 Fixed Eng L & R Switches, CABIN/COCKPIT HEATING KNOB, Added TRIM VALUES for PITCH and RUDDER
+
+# Added:
+  # - 2/11/2025 Released to Public 
+  # - 2/10/2025 Added Caution Section with many messages 
+  # - 2/9/2025 Initial testing for requester @ELEMENT
+
+include:
+
+  - definitions/modules/Instruments/AS_3000.yaml
+  - definitions/modules/Instruments/PMS50_GNS.yaml
+  - definitions/modules/Instruments/PMS50_GTN.yaml
+  - definitions/modules/Instruments/TDS_GTNXi.yam
+  - definitions/modules/autopilot.yaml
+  - definitions/modules/autopilot_BKSQ.yaml
+  - definitions/modules/commonlvars.yaml
+  - definitions/modules/controls.yaml
+  - definitions/modules/deice.yaml
+  - definitions/modules/electrical.yaml
+  - definitions/modules/engines.yaml
+  - definitions/modules/fuel.yaml
+  - definitions/modules/general.yaml
+  - definitions/modules/handling.yaml
+  - definitions/modules/lights.yaml
+  - definitions/modules/navigation.yaml
+  - definitions/modules/radios.yaml
+  - definitions/modules/safety.yaml
+  - definitions/modules/transponder.yaml
+  - definitions/modules/trim.yaml
+  
+  
+shared:
+  - # TEST
+    type: NumSet
+    var_name: A:LIGHT LANDING:2
+    var_units: Bool
+    var_type: f64
+    event_name: LANDING_LIGHTS_SET
+    event_param: 2
+
+#  - # LVAR's
+#  - #############  CAUTION MESSAGES #############
+  - #
+    type: var
+    var_name: L:P180_autofeather_caut
+  - #
+    type: var
+    var_name: L:P180_av_fan_fail_caut
+  - #
+    type: var
+    var_name: L:P180_batt_temp_caut
+  - #
+    type: var
+    var_name: L:P180_bus_not_intercon_caut
+  - #
+    type: var
+    var_name: L:P180_cabin_door_fail_caut
+  - #
+    type: var
+    var_name: L:P180_cas_caut_ack
+  - #
+    type: var
+    var_name: L:P180_cas-caut-ack-press
+  - #
+    type: var
+    var_name: L:P180_cas_caut_ack_press  
+  - #
+    type: var
+    var_name: L:P180_epu_drain_caut
+  - #
+    type: var
+    var_name: L:P180_flap_sync_fail_caut
+  - #
+    type: var
+    var_name: L:P180_fuel_filter_caut_i
+  - #
+    type: var
+    var_name: L:P180_fuel_filter_caut_r
+  - #
+    type: var
+    var_name: L:P180_fuel_press_caut_l
+  - #
+    type: var
+    var_name: L:P180_fuel_press_caut_r
+  - #
+    type: var
+    var_name: L:P180_fuel_pump_inop_caut_l
+  - #
+    type: var
+    var_name: L:P180_fuel_pump_inop_caut_r
+  - #
+    type: var
+    var_name: L:P180_fuel_valve_transit_caut_l
+  - #
+    type: var
+    var_name: L:P180_fuel_valve_transit_caut_r  
+  - #
+    type: var
+    var_name: L:P180_fuel_xfeed_caut
+  - #
+    type: var
+    var_name: L:P180_fuel_xfeed_intran_caut
+  - #
+    type: var
+    var_name: L:P180_hyd_press_caut
+  - #
+    type: var
+    var_name: L:P180_ice_fail_caut
+  - #
+    type: var
+    var_name: L:P180_low_fuel_caut_l
+  - #
+    type: var
+    var_name: L:P180_low_fuel_caut_r
+  - #
+    type: var
+    var_name: L:P180_oil_cool_caut
+  - #
+    type: var
+    var_name: L:P180_prop_pitch_caut_i
+  - #
+    type: var
+    var_name: L:P180_prop_pitch_caut_r
+  - #
+    type: var
+    var_name: L:P180_stall_fail_caut  
+  - #
+    type: var
+    var_name: L:P180_stall_fail_caut_cas
+  - #
+    type: var
+    var_name: L:P180_stall_fail_caut_test
+
+#  - #############  CoPILOT PANELS - Right ARM #############
+#  - ## RIGHT ARM Items ##
+  - # Reading Light
+    type: NumSet
+    var_name: A:LIGHT POTENTIOMETER:11
+    var_units: Percent
+    var_type: f64
+    event_name: LIGHT_POTENTIOMETER_11_SET
+    event_param: 11
+    index_reversed: true
+  - #
+    type: var
+    var_name: L:MOUSE_lighting_reading_r
+    unreliable: true
+  - #
+    type: var
+    var_name: L:light_reading_r
+
+#  - #############  CoPILOT PANELS - Upper Front #############
+#  - ## Chronometer ##
+  - #
+    type: var
+    var_name: L:gauge_chronometer_button_sel_r
+  - #
+    type: var
+    var_name: L:gauge_chronometer_button_sel_r_LF
+  - #
+    type: var
+    var_name: L:gauge_chronometer_button_ctl_r
+  - #
+    type: var
+    var_name: L:gauge_chronometer_button_ctl_r_LF
+#  - ## Warning, Caution, ICE push lights ##
+  - #
+    type: var
+    var_name: L:P180_cas-warn-ack-press
+  - #
+    type: var
+    var_name: L:P180_cas-caut-ack-press   
+  - #
+    type: var
+    var_name: L:P180_sys_test_ice
+  - #
+    type: var
+    var_name: L:P180_Light_Lamp_Multiplier
+
+#  - ## Pilot YOKE buttons ##
+  - #
+    type: var
+    var_name: L:XMLVAR_YokeHidden1
+  - #
+    type: var
+    var_name: L:P180_steering_mode
+  - #
+    type: var
+    var_name: A:AUTOPILOT DISENGAGED
+    var_units: Bool
+    var_type: bool
+    event_name: AUTOPILOT_DISENGAGE_SET
+  - # EFIS ETN BUTTON (H EVENT)
+    type: var
+    var_name: L:Generic_Display_PDF1_Push_4L
+
+#  - #############  CoPILOT PANELS - LOWER Front #############
+#  - ## CABIN PRESSURE PANEL ##
+  - # DUMP COVER
+    type: var
+    var_name: L:switch_dump_cover
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:switch_dump
+    cancel_h_events: true
+  - # Manual INC/DEC KNOB
+    type: var
+    var_name: L:pressure_adjust_knob
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:pressure_adjust_knob_LF
+  - #
+    type: var
+    var_name: L:P180_PRESSURE_MANUAL_KNOB_R
+    cancel_h_events: true
+  - # Pressure INC/DEC sw
+    type: var
+    var_name: L:pressure_inc
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:pressure_inc_LF
+  - # MANUAL AUTO PRESSURE SW
+    type: var
+    var_name: L:pressure_cab_iau
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:pressure_cab_iau_LF
+  - # CABIN MODE SEL
+    type: var
+    var_name: L:pressure_cab_sel
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:pressure_cab_sel_LF
+  - # Landing Altittude KNOB A
+    type: var
+    var_name: L:gauge_landing_knob_a
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:gauge_landing_knob_a_LF
+  - #
+    type: var
+    var_name: L:P180_LFE
+    cancel_h_events: true
+  - # Pressure Rate KNOB R
+    type: var
+    var_name: L:gauge_landing_knob_r
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:gauge_landing_knob_r_LF
+  - #
+    type: var
+    var_name: L:gauge_landing_knob_b
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:gauge_landing_knob_b_LF
+  - #
+    type: var
+    var_name: L:P180_PRESSURE_KNOB_B
+    cancel_h_events: true
+
+#  - #############  MISCELLENEOUS ITEMS #############
+#  - ## Pressurization  ##
+  - # 
+    type: NumSet
+    var_name: A:BLEED AIR ENGINE:1
+    var_units: Bool
+    var_type: i32
+    event_name: ENGINE_BLEED_AIR_SOURCE_SET
+    event_param: 1
+    index_reversed: true
+  -
+    type: ToggleSwitch
+    var_name: A:BLEED AIR ENGINE:1
+    var_units: Bool
+    var_type: bool
+    event_name: ENGINE_BLEED_AIR_SOURCE_TOGGLE
+    event_param: 1
+    index_reversed: true
+  -
+    type: NumSet
+    var_name: A:BLEED AIR ENGINE:2
+    var_units: Bool
+    var_type: i32
+    event_name: ENGINE_BLEED_AIR_SOURCE_SET
+    event_param: 2
+    index_reversed: true
+  -
+    type: ToggleSwitch
+    var_name: A:BLEED AIR ENGINE:2
+    var_units: Bool
+    var_type: bool
+    event_name: ENGINE_BLEED_AIR_SOURCE_TOGGLE
+    event_param: 2
+    index_reversed: true
+  - # 
+    type: NumSet
+    var_name: A:BLEED AIR SOURCE CONTROL
+    var_units: Enum
+    var_type: i32
+    event_name: BLEED_AIR_SOURCE_CONTROL_SET
+  - # 
+    type: NumSet
+    var_name: A:BLEED AIR APU
+    var_units: Bool
+    var_type: i32
+    event_name: APU_BLEED_AIR_SOURCE_SET
+  -
+    type: ToggleSwitch
+    var_name: A:BLEED AIR APU
+    var_units: Bool
+    var_type: bool
+    event_name: APU_BLEED_AIR_SOURCE_TOGGLE
+  - # 
+    type: ToggleSwitch
+    var_name: A:PRESSURIZATION DUMP SWITCH
+    var_units: Bool
+    var_type: bool
+    event_name: PRESSURIZATION_PRESSURE_DUMP_SWITCH
+#  - # 
+#    type: NumIncrement
+#    var_name: A:PRESSURIZATION CABIN ALTITUDE GOAL
+#    var_units: Feet
+#    var_type: f64
+#    up_event_name: PRESSURIZATION_PRESSURE_ALT_INC
+#    down_event_name: PRESSURIZATION_PRESSURE_ALT_DEC
+#    increment_by: 53
+#    unreliable: true
+
+#  - ## TABLET FUNCTIONS  ##
+  - # Start Status
+    type: var
+    var_name: L:FFX_COLD_AND_DARK
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:FFX_TAXI_STATE
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:FFX_TAKEOFF_STATE
+    cancel_h_events: true
+  - # Covers
+    type: var
+    var_name: L:FFX_CHOCKS_COVERS
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:FFX_PITOT_STATIC_COVERS
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:FFX_ENGINE_COVERS
+    cancel_h_events: true
+  - # DOORS - MAIN
+    type: var
+    var_name: L:P180_Upper_front_door
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:P180_front_door_timer 
+    cancel_h_events: true 
+  - # DOORS - Luggage
+    type: var
+    var_name: L:FFX_LUGGAGE_DOOR
+    cancel_h_events: true
+  - # CONFIG ITEMS
+    type: var
+    var_name: L:FFX_EXEC_CONFIG
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:FFX_CLUTTER_CONFIG
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:FFX_BOX_LUNCH_CONFIG
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:FFX_PIZZA_CONFIG
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:FFX_PLATED_DINNER_CONFIG
+    cancel_h_events: true
+  - # Luggage Types
+    type: var
+    var_name: L:FFX_TYPE_SKI
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:FFX_TYPE_LUGGAGE
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:FFX_TYPE_GOLF
+    cancel_h_events: true
+  - # NOISE reduction
+    type: var
+    var_name: L:FFX_ANR_NOISE
+    cancel_h_events: true
+  - # STEERING MODE
+    type: var
+    var_name: L:FFX_AUTO_STEER_MODE
+    cancel_h_events: true
+  - # Engine Damage
+    type: var
+    var_name: L:FFX_ENABLE_DMG_REALISM
+    cancel_h_events: true
+  - # Repair Engines
+    type: var
+    var_name: L:FFX_REPAIR_ENGINES_STATE
+    cancel_h_events: true
+  - # Brightness, Location and HOME butttons
+    type: var
+    var_name: L:tablet_brightness
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:tablet_stow
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:tablet_stow_LF
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:P180_TABLET_STATE
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:push_tablet_home
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:push_tablet_home_LF
+    cancel_h_events: true
+  - # SUNVISORS
+    type: var
+    var_name: L:p180_sunvisor_1
+  - #
+    type: var
+    var_name: L:p180_sunvisor_2
+
+#  - #############  Passenger CABIN/CARGO AREA#############
+#  - ## LIGHTING SWITCHES ##
+  - # Entry Lights at Main Door opening
+    type: NumSet
+    var_name: A:LIGHT POTENTIOMETER:8
+    var_units: Percent
+    var_type: f64
+    event_name: LIGHT_POTENTIOMETER_8_SET
+    event_param: 8
+    index_reversed: true
+  - # Cabin Lights switch at Main Door
+    type: var
+    var_name: L:lighting_cabin
+  - #
+    type: var
+    var_name: L:cabin_softkey_stair_cabin_light 
+  - # Crew Lights switch at Main Door
+    type: var
+    var_name: L:lighting_cockpit
+  - #
+    type: var
+    var_name: L:cabin_softkey_stair_crew_light 
+  - # Cabinet Drawers
+    type: var
+    var_name: L:p180_furniture_drawer_01
+  - #
+    type: var
+    var_name: L:p180_furniture_drawer_02
+  - #
+    type: var
+    var_name: L:p180_furniture_drawer_03
+  - #
+    type: var
+    var_name: L:p180_furniture_drawer_04
+  - #
+    type: var
+    var_name: L:p180_furniture_drawer_05
+  - #
+    type: var
+    var_name: L:p180_furniture_drawer_06
+  - #
+    type: var
+    var_name: L:p180_furniture_drawer_07
+  - #
+    type: var
+    var_name: L:p180_furniture_drawer_08   
+  - #
+    type: var
+    var_name: L:p180_furniture_drawer_09
+  - #
+    type: var
+    var_name: L:p180_furniture_drawer_10
+  - #
+    type: var
+    var_name: L:p180_furniture_drawer_11
+  - #
+    type: var
+    var_name: L:p180_furniture_drawer_12
+  - #
+    type: var
+    var_name: L:p180_furniture_DRAWER_13
+  - #
+    type: var
+    var_name: L:p180_furniture_DRAWER_14
+  - #
+    type: var
+    var_name: L:p180_furniture_DRAWER_15
+  - #
+    type: var
+    var_name: L:p180_furniture_DRAWER_16
+  - #
+    type: var
+    var_name: L:p180_furniture_DRAWER_17
+  - #
+    type: var
+    var_name: L:p180_furniture_DRAWER_18
+  - #
+    type: var
+    var_name: L:p180_furniture_DRAWER_19
+  - #
+    type: var
+    var_name: L:p180_furniture_DRAWER_20
+  - # Cabin Shades
+    type: var
+    var_name: L:cabin_shade_l_01
+  - #
+    type: var
+    var_name: L:cabin_shade_l_02
+  - #
+    type: var
+    var_name: L:cabin_shade_l_03
+  - #
+    type: var
+    var_name: L:cabin_shade_l_04
+  - #
+    type: var
+    var_name: L:cabin_shade_l_05
+  - #
+    type: var
+    var_name: L:cabin_shade_l_06
+  - #
+    type: var
+    var_name: L:cabin_shade_r_01
+  - #
+    type: var
+    var_name: L:cabin_shade_r_02
+  - #
+    type: var
+    var_name: L:cabin_shade_r_03
+  - #
+    type: var
+    var_name: L:cabin_shade_r_04
+  - #
+    type: var
+    var_name: L:cabin_shade_r_06
+  - #
+    type: var
+    var_name: L:cabin_shade_r_06
+  - # Furniture Doors
+    type: var
+    var_name: L:p180_furniture_door_01
+  - #
+    type: var
+    var_name: L:p180_furniture_door_02
+  - #
+    type: var
+    var_name: L:p180_furniture_door_03
+  - #
+    type: var
+    var_name: L:p180_furniture_door_04
+  - #
+    type: var
+    var_name: L:p180_furniture_door_trash
+  - # Toilet Sliding Door
+    type: var
+    var_name: L:P180_toilet_door
+  - # Main Exit
+    type: var
+    var_name: L:P180_front_door_active
+  - #
+    type: var
+    var_name: L:P180_upper_front_door
+  - #
+    type: var
+    var_name: L:P180_front_door_timer
+    unreliable: true   
+  - # Seats -  Headrests, levers and PUSH
+    type: var
+    var_name: L:furniture_seat_head_01
+  - #
+    type: var
+    var_name: L:furniture_seat_head_02
+  - #
+    type: var
+    var_name: L:furniture_seat_head_03
+  - #
+    type: var
+    var_name: L:furniture_seat_head_04
+  - #
+    type: var
+    var_name: L:furniture_seat_ctl_lever_01
+  - #
+    type: var
+    var_name: L:furniture_seat_ctl_lever_02
+  - #
+    type: var
+    var_name: L:furniture_seat_ctl_lever_03
+  - #
+    type: var
+    var_name: L:furniture_seat_ctl_lever_04
+  - #
+    type: var
+    var_name: L:furniture_seat_ctl_push_01
+  - #
+    type: var
+    var_name: L:furniture_seat_ctl_push_02
+  - #
+    type: var
+    var_name: L:furniture_seat_ctl_push_03
+  - #
+    type: var
+    var_name: L:furniture_seat_ctl_push_04
+  - # Toilet Seat
+    type: var
+    var_name: L:P180_toilet_seat
+  - # Tables
+    type: var
+    var_name: L:p180_furniture_table_l
+  - #
+    type: var
+    var_name: L:p180_furniture_table_r
+  - # TV's
+    type: var
+    var_name: L:p180_TV_L
+  - #
+    type: var
+    var_name: L:p180_TV_R
+
+
+#  - #############  PEDISTAL - UPPER #############
+#  - ## MASTER SWITCH PANEL ##
+  - # BATTERY
+    type: var
+    var_name: L:electrical_switch_bat
+    cancel_h_events: true
+  - # 
+    type: var
+    var_name: L:electrical_switch_bat_LF
+    cancel_h_events: true
+  - # LEFT GEN
+    type: var
+    var_name: L:electrical_switch_generator_l
+    cancel_h_events: true
+  - # 
+    type: var
+    var_name: L:electrical_switch_generator_l_LF
+    cancel_h_events: true
+  - #RIGHT GEN
+    type: var
+    var_name: L:electrical_switch_generator_r
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:electrical_switch_generator_r_LF
+    cancel_h_events: true
+  - # EPU
+    type: var
+    var_name: L:electrical_switch_epu
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:electrical_switch_epu_LF
+  - #
+    type: var
+    var_name: L:p180_epu_drain_caut
+    cancel_h_events: true
+  - # BUS DISCONNECT SW
+    type: var
+    var_name: L:electrical_switch_emer_bus_disc
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:electrical_switch_emer_bus_disc_LF
+  - #
+    type: var
+    var_name: L:p180_bus_not_inercon_cau
+    cancel_h_events: true
+  - # Avionics SW
+    type: var
+    var_name: L:electrical_switch_avionics
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:electrical_switch_avionics_LF
+
+#  - ## FUEL SWITCH PANEL ##
+  - # LF/W VALVE OPEN
+    type: var
+    var_name: L:fuel_switch_fw_valve_l
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:fuel_switch_fw_valve_l_LF  
+  - #
+    type: var
+    var_name: L:P180_fuel_firewall_l_reset
+  - # L PUMP MAIN
+    type: var
+    var_name: L:fuel_switch_pump_l
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:fuel_switch_pump_l_LF
+  - #
+    type: var
+    var_name: L:P180_fuel_pump_l
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:P180_fuel_press_caut_l
+  - # CROSSFEED KNOB
+    type: var
+    var_name: L:fuel_crossfeed_knob
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:fuel_crossfeed_knob_LF
+  - #
+    type: var
+    var_name: L:P180_fuel_Xfeed_intran_caut
+  - # R PUMP MAIN
+    type: var
+    var_name: L:fuel_switch_pump_r
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:fuel_switch_pump_r_LF
+  - #
+    type: var
+    var_name: L:P180_fuel_pump_r
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:P180_fuel_press_caut_r
+  - # R VALVE OPEN
+    type: var
+    var_name: L:fuel_switch_fw_valve_r
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:fuel_switch_fw_valve_r_LF
+  - #
+    type: var
+    var_name: L:P180_fuel_firewall_r_reset
+
+#  - ## ENGINE/PROPELLER SWITCH PANEL ##
+  - # LEFT START SW
+    type: var
+    var_name: L:engine_switch_start_l
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:engine_switch_start_l_LF
+  - # LEFT IGNITION SW
+    type: var
+    var_name: L:engine_switch_ign_l
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:engine_switch_ign_l_LF
+  - #
+    type: var
+    var_name: L:P180_engine_ignition_l
+    cancel_h_events: true
+  - # LEFT OIL COOLING SW
+    type: var
+    var_name: L:engine_switch_oil_cool_l
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:engine_switch_oil_cool_l_LF
+  - #
+    type: var
+    var_name: L:P180_engine_oil_cool_l
+    cancel_h_events: true
+  - # RIGHT OIL COOLING SW
+    type: var
+    var_name: L:engine_switch_oil_cool_r
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:engine_switch_oil_cool_r_LF
+  - #
+    type: var
+    var_name: L:P180_engine_oil_cool_r
+    cancel_h_events: true
+  - # RIGHT IGNITION SW
+    type: var
+    var_name: L:engine_switch_ign_r
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:engine_switch_ign_r_LF
+  - #
+    type: var
+    var_name: L:P180_engine_ignition_r
+    cancel_h_events: true
+  - # RIGHT START SW
+    type: var
+    var_name: L:engine_switch_start_r
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:engine_switch_start_r_LF
+  - # OVERSPEED TEST SW
+    type: var
+    var_name: L:engine_switch_ovsp_test
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:engine_switch_ovsp_test_LF
+  - # AUTOFEATHER SW
+    type: var
+    var_name: L:engine_switch_autofeather
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:engine_switch_autofeather_LF
+  - #
+    type: var
+    var_name: L:P180_engine_autofeather_test
+    cancel_h_events: true
+  - # SYNCHPH SW
+    type: var
+    var_name: L:engine_switch_syncph
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:engine_switch_syncph_L
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:P180_engine_syncph
+    cancel_h_events: true
+
+#  - #############  PEDISTAL - Quadrant #############
+#  - ## LIGHT SWITCH PANEL ##
+  - # POSITION LIGHTS
+    type: var
+    var_name: L:lights_pos
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:lights_pos_LF  
+  - # ANTICOLLISION 
+    type: var
+    var_name: L:lights_anticoln
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:lights_anticoln_LF
+  - # RECOGNITION 
+    type: var
+    var_name: L:lights_recog
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:lights_recog_LF
+  - # Fasten SEATBELTS
+    type: var
+    var_name: L:lights_seatbelt
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:lights_seatbelt_LF
+  - # WING ICE LIGHTS
+    type: var
+    var_name: L:lights_wing
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:lights_wing_LF
+  - # MANUAL EMEGRENCY GEAR HAND PUMP
+    type: var
+    var_name: L:handling_manual_lg
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:handling_manual_lg_LF
+#  - #############  PEDISTAL - Lower area #############
+#  - ## TRIMS PITCH PRIMARY & SECONDARY, RUDDER ##
+
+  - # PITCH TRIM PRI/SEC SW
+    type: var
+    var_name: L:P180_pitch_trim_mode
+  - #
+    type: var
+    var_name: L:pitch_trim_mode
+  - #
+    type: var
+    var_name: L:pitch_trim_mode_LF
+
+  - # PITCH TRIM UP/DN SW
+    type: var
+    var_name: L:pitch_trim_1
+  - # 
+    type: var
+    var_name: L:pitch_trim_1_LF
+  - # 
+    type: var
+    var_name: L:P180_sec_pitch_trim
+  - # 
+    type: var
+    var_name: L:P180_sec_pitch_trim_on
+#  - # RUDDER TRIM SWITCH - Uses standard XMLVAR_RudderTrim_Switch_1
+  - # 
+    type: var
+    var_name: L:XMLVAR_RudderTrim_Switch_1
+
+
+#  - #############  PILOT PANELS - LEFT ARM #############
+#  - ## LIGHTING PANEL SWITCHES ##
+  - #
+    type: var
+    var_name: L:lighting_lamp
+    cancel_h_events: true
+  - # 
+    type: var
+    var_name: L:lighting_lamp_LF
+  - #
+    type: var
+    var_name: L:lighting_cabin
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:lighting_cabin_LF
+  - #
+    type: var
+    var_name: L:lighting_cockpit
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:lighting_cockpit_LF
+  - #
+   type: var
+   var_name: L:lighting_flood
+   cancel_h_events: true
+  - #
+    type: var
+    var_name: L:lighting_flood_LF
+  - #
+    type: var
+    var_name: L:lighting_panels
+  - #
+    type: var
+    var_name: L:lighting_displays
+  - # Reading Light
+    type: NumSet
+    var_name: A:LIGHT POTENTIOMETER:10
+    var_units: Percent
+    var_type: f64
+    event_name: LIGHT_POTENTIOMETER_10_SET
+    event_param: 10
+    index_reversed: true
+  - #
+    type: var
+    var_name: L:lighting_reading_l
+  - #
+    type: var
+    var_name: L:MOUSE_lighting_reading_l
+    unreliable: true
+
+#  - ## PILOT YOKE CONTROLS ##
+  - # HIDE PILOT YOKE
+    type: var
+    var_name: L:XMLVAR_YokeHidden1
+  - # MODE STEER & CONTROL WHEEL MASTER SW
+    type: var
+    var_name: L:P180_steering_mode
+  - # AUTOPILOT DISENGAGE 
+    type: ToggleSwitch   
+    var_name: A:AUTOPILOT DISENGAGED
+    var_units: Bool
+    var_type: bool
+    event_name: AUTOPILOT_DISENGAGE_SET
+  - # EFIS ET BTN
+    type: var
+    var_name: L:Generic_Display_PDF1_Push_4L
+
+#  - #############  PILOT PANELS - FRONT UPPER #############
+#  - ## CHRONOMETER SWITCHES ##
+  - #
+    type: var
+    var_name: L:gauge_chronometer_button_sel_l
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:gauge_chronometer_button_sel_l_LF
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:gauge_chronometer_button_ctl_l
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:gauge_chronometer_button_ctl_l_LF
+    cancel_h_events: true
+  - # ELT MODE SW
+    type: var
+    var_name: L:switch_elt
+    cancel_h_events: true
+  - # 
+    type: var
+    var_name: L:switch_elt_LF
+    cancel_h_events: true
+  - # MISC TEST SWITCHES
+    type: var
+    var_name: L:major_test_3
+    unreliable: true
+  - #
+    type: var
+    var_name: L:major_test_4
+    unreliable: true
+  - #
+    type: var
+    var_name: L:major_test_5
+    unreliable: true
+  - # WARNING BUTTON ACKNOWLEDGE
+    type: var
+    var_name: L:P180_cas_warn_ack_press
+  - # CAUTION BUTTON ACKNOWLEDGE
+    type: var
+    var_name: L:P180_cas_caut_ack_press
+  - # ICE BUTTON ACKNOWLEDGE
+    type: var
+    var_name: L:P180_sys_test_ice
+  - # 
+    type: var
+    var_name: L:P180_ice_fail_caut
+  - #
+    type: var
+    var_name: L:P180_Light_Lamp_Multiplier
+
+#  - #############  PILOT PANELS - FRONT LOWER #############
+#  - ## COOLING PANEL SWITCHES ##
+  - #
+    type: var
+    var_name: L:cooling_cool
+    cancel_h_events: true  
+  - #
+    type: var
+    var_name: L:cooling_fan_ckpt
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:cooling_fan_cabin
+    cancel_h_events: true
+
+#  - ## HEATING PANEL SWITCHES ##
+  - #
+    type: var
+    var_name: L:heating_cockpit_knob_big
+  - #
+    type: var
+    var_name: L:heating_cockpit_knob_small_LF 
+  - #
+    type: var
+    var_name: L:heating_cockpit_knob_small
+  - #
+    type: var
+    var_name: L:heating_cabin_knob_big
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:heating_cabin_knob_big_LF
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:heating_cabin_knob_small
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:heating_cabin_knob_small_LF
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:heating_cabin_manual_knob_big
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:heating_cabin_manual_knob_big_LF
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:heating_cabin_manual_knob_small
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:heating_cabin_manual_knob_small_LF
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:heating_ckpt_blower
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:heating_ckpt_blower_LF
+    cancel_h_events: true
+
+#  - #############  PILOT PANELS - MIDDLE UPPER #############
+#  - ## COM2, NAV2, TRANSPONDER & ADF2 PANEL SWITCHES ##
+  - # 
+    type: var
+    var_name: L:coms_softkey_1
+  - #
+    type: var
+    var_name: L:coms_softkey_2
+  - #
+    type: var
+    var_name: L:coms_softkey_3
+  - #
+    type: var
+    var_name: L:coms_softkey_4
+  - #
+    type: var
+    var_name: L:coms_softkey_5
+  - #
+    type: var
+    var_name: L:coms_softkey_6
+  - #
+    type: var
+    var_name: L:coms_softkey_7
+  - #
+    type: var
+    var_name: L:coms_ident
+  - #
+    type: var
+    var_name: L:coms_dme_h
+  - #
+    type: var
+    var_name: L:coms_half
+  - #
+    type: var
+    var_name: L:coms_knob 
+  - #
+    type: var
+    var_name: L:coms_knob_small
+
+#  - #############  PILOT PANELS - MIDDLE LOWER #############
+#  - ## BLEED AIR PANEL SWITCHES ##
+  - # EMERG SW
+    type: var
+    var_name: L:bleed_emer
+  - #
+    type: var
+    var_name: L:bleed_emer_LF
+  - #
+    type: var
+    var_name: L:P180_EMER_BLEED
+  - # LEFT ENG BLEED
+    type: var
+    var_name: L:bleed_l
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:bleed_l_LF
+  - # RIGHT ENG BLEED
+    type: var
+    var_name: L:bleed_r
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:bleed_r_LF
+#  - ## HYDRAULIC PANEL SWITCHES ##
+  - #
+    type: var
+    var_name: L:hyd
+    cancel_h_events: true   
+  - #
+    type: var
+    var_name: L:hyd_LF
+  - #
+    type: var
+    var_name: L:P180_hydraulics
+    cancel_h_events: true
+#  - ## LANDING GEAR PANEL SWITCHES ##
+  - #
+    type: var
+    var_name: L:LANDING_GEAR_gear
+  - #
+    type: var
+    var_name: L:landing_gear_lights
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:landing_gear_lights_LF
+  - #
+    type: var
+    var_name: L:P180_gears_lights_state
+    cancel_h_events: true
+  - # Front Animated gear light door
+    type: var
+    var_name: L:P180_front_light_door_anim
+
+#  - ## ANTI_ICE PANEL SWITCHES ##
+  - # PITOT LEFT & STALL SW
+    type: var
+    var_name: L:anti_ice_static_l
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:anti_ice_static_l_LF
+  - # PITOT RIGHT & TAT SW
+    type: var
+    var_name: L:anti_ice_static_r
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:anti_ice_static_r_LF
+  - # FWD WING LEFT
+    type: var
+    var_name: L:anti_ice_fwd_wing_l
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:anti_ice_fwd_wing_l_LF
+  - #  FWD WING RIGHT
+    type: var
+    var_name: L:anti_ice_fwd_wing_r
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:anti_ice_fwd_wing_r_LF
+  - # ENG ICE VANE LEFT
+    type: var
+    var_name: L:anti_ice_eng_l
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:anti_ice_eng_l_LF
+  - # ENG ICE VANE RIGHT
+    type: var
+    var_name: L:anti_ice_eng_r
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:anti_ice_eng_r_LF
+  -
+    type: ToggleSwitch   
+    var_name: A:ENG ANTI ICE:1
+    var_units: Bool
+    var_type: bool
+    event_name: ANTI_ICE_SSET_ENG1
+    event_param: 1
+  -
+    type: ToggleSwitch   
+    var_name: A:ENG ANTI ICE:2
+    var_units: Bool
+    var_type: bool
+    event_name: ANTI_ICE_SSET_ENG1
+    event_param: 2
+  - # Windeshield Heater Primary
+    type: var
+    var_name: L:anti_ice_windshield_pri
+    cancel_h_events: true   
+  - #
+    type: var
+    var_name: L:anti_ice_windshield_pri_LF
+  - # Windeshield Heater Primary
+    type: var
+    var_name: L:anti_ice_windshield_sec
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:anti_ice_windshield_sec_LF
+  - # MAIN WING LEFT
+    type: var
+    var_name: L:anti_ice_wing_l
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:anti_ice_wing_l_LF 
+  - #
+    type: var
+    var_name: L:anti_ice_wing_l_auto
+    cancel_h_events: true
+  - # MAIN WING RIGHT
+    type: var
+    var_name: L:anti_ice_wing_r
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:anti_ice_wing_r_LF
+  - #
+    type: var
+    var_name: L:anti_ice_wing_r_auto
+    cancel_h_events: true
+  - # Oil Cooler INTK Left
+    type: var
+    var_name: L:anti_ice_oil_cool_l
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:anti_ice_oil_cool_l_LF
+  - # Oil Cooler INTK Right
+    type: var
+    var_name: L:anti_ice_oil_cool_r
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:anti_ice_oil_cool_r_LF   
+#  - # BOOTS DEICE - Developer spells this incorrectly
+  - #
+    type: var
+    var_name: L:anti_ice_boost_l
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:anti_ice_boost_l_LF
+  - #
+    type: var
+    var_name: L:anti_ice_boost_deice
+    cancel_h_events: true
+  - #
+    type: var
+    var_name: L:anti_ice_boost_deice_LF
+
+#  - ## SYSTEM TEST PANEL SWITCH ##
+  - # ANN
+    type: var
+    var_name: L:P180_sys_test_ann
+  - # AVCS TEST
+    type: var
+    var_name: L:P180_sys_test_avcs
+  - # 
+    type: var
+    var_name: L:P180_sys_test_avcs_timer
+    unreliable: true
+  - # ENGINE EXCEED
+    type: var
+    var_name: L:P180_sys_eng_excd
+  - # FIRE
+    type: var
+    var_name: L:P180_sys_test_fire
+  - # FLAPS
+    type: var
+    var_name: L:P180_sys_test_flaps
+  - # FUEL
+    type: var
+    var_name: L:P180_sys_test_fuel
+  - # FWD WING ICE
+    type: var
+    var_name: L:P180_sys_test_fwd_wing_ice
+  - # HYD
+    type: var
+    var_name: L:P180_sys_test_hyd
+  - # ICE
+    type: var
+    var_name: L:P180_sys_test_ice
+  - #
+    type: var
+    var_name: L:P180_sys_test_ice_timer
+    unreliable: true
+  - # KNOB POSIION
+    type: var
+    var_name: L:P180_sys_test_knob_pos
+  - #
+    type: var
+    var_name: L:P180_sys_test_knob_pos_anim
+  - # LAMP
+    type: var
+    var_name: L:P180_sys_test_lamp
+  - # Landing gear
+    type: var
+    var_name: L:P180_sys_test_ldngr
+  - # Main Wing ICE
+    type: var
+    var_name: L:P180_sys_test_mn_wing_ice
+  - #
+    type: var
+    var_name: L:P180_sys_test_mn_wing_ice_on
+  - #
+    type: var
+    var_name: L:P180_sys_test_mn_wing_ice_start_test
+  - #
+    type: var
+    var_name: L:P180_sys_test_mn_wing_ice_timer
+    unreliable: true
+  - # OVERSPEED
+    type: var
+    var_name: L:P180_sys_test_ovsp_warn
+  - # RADIO ALTIMETER
+    type: var
+    var_name: L:P180_sys_test_rad_alt
+  - # STALL TEST
+    type: var
+    var_name: L:P180_sys_test_stall
+  - #
+    type: var
+    var_name: L:P180_sys_test_stall_timer
+    unreliable: true
+  - # STEER
+    type: var
+    var_name: L:P180_sys_test_steer
+
+
+
+server:
+  -
+    type: var
+    var_name: A:FUEL TANK LEFT MAIN LEVEL
+    var_units: Percent
+    var_type: f64
+    unreliable: true
+  -
+    type: var
+    var_name: A:FUEL TANK RIGHT MAIN LEVEL
+    var_units: Percent
+    var_type: f64
+    unreliable: true
+  -
+    type: var
+    var_name: A:PAYLOAD STATION WEIGHT:1
+    var_units: Pounds
+    var_type: f64
+    unreliable: true
+  -
+    type: var
+    var_name: A:PAYLOAD STATION WEIGHT:2
+    var_units: Pounds
+    var_type: f64
+    unreliable: true
+  -
+    type: var
+    var_name: A:PAYLOAD STATION WEIGHT:3
+    var_units: Pounds
+    var_type: f64
+    unreliable: true
+  -
+    type: var
+    var_name: A:PAYLOAD STATION WEIGHT:4
+    var_units: Pounds
+    var_type: f64
+    unreliable: true
+  -
+    type: var
+    var_name: A:PAYLOAD STATION WEIGHT:5
+    var_units: Pounds
+    var_type: f64
+    unreliable: true
+  -
+    type: var
+    var_name: A:PAYLOAD STATION WEIGHT:6
+    var_units: Pounds
+    var_type: f64
+    unreliable: true
+  -
+    type: var
+    var_name: A:PAYLOAD STATION WEIGHT:7
+    var_units: Pounds
+    var_type: f64
+    unreliable: true
+  -
+    type: var
+    var_name: A:PAYLOAD STATION WEIGHT:8
+    var_units: Pounds
+    var_type: f64
+    unreliable: true
+  -
+    type: var
+    var_name: A:PAYLOAD STATION WEIGHT:9
+    var_units: Pounds
+    var_type: f64
+    unreliable: true
+  -
+    type: var
+    var_name: A:PAYLOAD STATION WEIGHT:10
+    var_units: Pounds
+    var_type: f64
+    unreliable: true
+  -
+    type: var
+    var_name: A:PAYLOAD STATION WEIGHT:11
+    var_units: Pounds
+    var_type: f64
+    unreliable: true
