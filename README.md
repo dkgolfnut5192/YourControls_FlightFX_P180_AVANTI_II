@@ -14,7 +14,7 @@ Profile to work with YourControls application and MSFS2020. If you find any bugs
 
 # Added:
    - 2/11/2025 Released to Public 
-   - 2/10/2025 Added Caution Section with many messages 
+   - 2/10/2025 Added "Caution Section" with many messages 
    - 2/9/2025 Initial testing for requester @ELEMENT
 
 I recommend that you and your co-pilot first conduct a test flight to check if everything is working properly.
